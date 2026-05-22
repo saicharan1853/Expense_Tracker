@@ -19,7 +19,9 @@ import { ExpensesModule } from './expenses/expenses.module';
   database: process.env.DATABASE_NAME,
   autoLoadEntities: true,
   synchronize: true,
-  ssl: true,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 }),
 
     UsersModule,
