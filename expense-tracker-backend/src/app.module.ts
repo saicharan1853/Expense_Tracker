@@ -10,27 +10,17 @@ import { ExpensesModule } from './expenses/expenses.module';
       isGlobal: true,
     }),
 
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-
-        host: configService.get('DB_HOST'),
-
-        port: parseInt(configService.get('DB_PORT') || '5432'),
-
-        username: configService.get('DB_USERNAME'),
-
-        password: configService.get('DB_PASSWORD'),
-
-        database: configService.get('DB_DATABASE'),
-
-        autoLoadEntities: true,
-
-        synchronize: true,
-      }),
-    }),
+    TypeOrmModule.forRoot({
+  type: 'postgres',
+  host: process.env.DATABASE_HOST,
+  port: Number(process.env.DATABASE_PORT),
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
+  autoLoadEntities: true,
+  synchronize: true,
+  ssl: true,
+}),
 
     UsersModule,
 
